@@ -15,6 +15,9 @@ var poem = [
 	"especially yours can heal a frozen heart",
 ];
 
+//index var 
+let indx = 0;
+
 var Blockchain = {
 	blocks: [],
 };
@@ -28,16 +31,50 @@ Blockchain.blocks.push({
 });
 
 // TODO: insert each line into blockchain
-// for (let line of poem) {
-// }
+
+for (let line of poem) {
+	let block = createBlock(line)
+
+	Blockchain.blocks.push({
+		index: block.index,
+		hash: block.hash,
+		data: block.data,
+		timestamp: block.timestamp,
+		prevHash: block.prevHash
+	});
+}
 
 // console.log(`Blockchain is valid: ${verifyChain(Blockchain)}`);
 
 
 // **********************************
 
+
+function createBlock(text) {
+	indx++;
+
+	let block = {
+		index: indx,
+		prevHash: Blockchain.blocks[indx-1].hash,
+		data: text,
+		timestamp: Date.now(),
+		hash: ""
+	}
+
+	let block_hash = blockHash(block)
+
+	block.hash = block_hash;
+
+	return block
+}
+
 function blockHash(bl) {
 	return crypto.createHash("sha256").update(
 		// TODO: use block data to calculate hash
+		bl.index,
+		bl.prevHash,
+		bl.data,
+		bl.timestamp
+
 	).digest("hex");
 }
