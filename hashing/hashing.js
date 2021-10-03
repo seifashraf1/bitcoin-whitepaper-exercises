@@ -58,12 +58,9 @@ function createBlock(text) {
 		prevHash: Blockchain.blocks[indx-1].hash,
 		data: text,
 		timestamp: Date.now(),
-		hash: ""
 	}
 
-	let block_hash = blockHash(block)
-
-	block.hash = block_hash;
+	block.hash = blockHash(block)
 
 	return block
 }
