@@ -60,6 +60,7 @@ function createBlock(text) {
 		timestamp: Date.now(),
 	}
 
+	
 	block.hash = blockHash(block)
 
 	return block
